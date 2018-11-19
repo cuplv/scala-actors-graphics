@@ -34,10 +34,15 @@ object Graphics2DTest extends SimpleSwingApplication {
         listenTo(button)
         size = new Dimension(320, 320)
         val (cancellable, clockActor) = CreateClockActorAndGo.doIt(canvas)
+        var alreadyStopped = false
         reactions += {
-            case ButtonClicked(c) if c == button =>
-                cancellable.cancel()
-                clockActor!Stop
+            case ButtonClicked(c) if c == button => {
+                if (!alreadyStopped) {
+                    cancellable.cancel()
+                    clockActor ! Stop
+                    alreadyStopped = true
+                }
+            }
         }
     }
 }
