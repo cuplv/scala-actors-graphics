@@ -6,7 +6,6 @@ import akka.actor.{Actor, ActorRef, ActorSystem, Props}
 case object Tick
 case object Terminate
 case class StateUpdate(id: (Int, Int), isAlive: Boolean)
-case class PaintYourself(g: Graphics2D, x: Double, y: Double, w: Double, h: Double)
 
 case class NeighborDescription(id: (Int, Int), acRef: ActorRef, var actorIsAlive: Boolean)
 
