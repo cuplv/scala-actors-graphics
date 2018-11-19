@@ -7,11 +7,12 @@ import scala.swing.BorderPanel.Position.{Center, South}
 import scala.swing.event.{ButtonClicked, MouseClicked}
 import scala.swing.{BorderPanel, Button, Dimension, Frame, MainFrame, Panel, SimpleSwingApplication}
 
-
+/* This is the canvas for the game of life. We will display each cell and its current state */
 class GameOfLifeCanvas extends Panel {
-    val n: Int = 50
+    val n: Int = 25
+    /* Create a 25 x 25 board */
     val gBoard = new GameOfLifeBoard(n, n)
-
+    /* This is called each time we need to repaint the board */
     override def paintComponent(g: Graphics2D): Unit = {
         val W = size.width
         val H = size.height
@@ -21,15 +22,16 @@ class GameOfLifeCanvas extends Panel {
         for (i <- 0 until n){
             for (j <- 0 until n){
                 val isAlive = gBoard.getCellState(i, j)
-                if (isAlive) g.setColor(Color.RED)
-                else g.setColor(Color.BLUE)
-                g.fill(new Rectangle2D.Double(i.toDouble * w, j.toDouble * h, w, h))
+                if (isAlive) g.setColor(Color.GREEN) /* Alive = GREEN */
+                else g.setColor(Color.BLACK) /* Dead = BLACK */
+                /* Draw rounded rectangles */
+                g.fill(new RoundRectangle2D.Double(i.toDouble * w, j.toDouble * h, w, h, w/3, h/3))
                 g.setColor(Color.BLACK)
-                g.draw(new Rectangle2D.Double(i.toDouble * w, j.toDouble * h, w, h))
+                g.draw(new RoundRectangle2D.Double(i.toDouble * w, j.toDouble * h, w, h,w/3, h/3))
             }
         }
     }
-
+    /* If a click is registered, make the corresponding cell alive */
     def registerClick(x: Double, y: Double) = {
         val w: Double = size.width.toDouble/n.toDouble
         val h: Double = size.height.toDouble/n.toDouble
@@ -40,6 +42,7 @@ class GameOfLifeCanvas extends Panel {
         repaint()
     }
 
+    /* this is called periodically to update all the cells and send messages */
     def updateAll() = {
         for (i <- 0 until n) {
             for (j <- 0 until n) {
