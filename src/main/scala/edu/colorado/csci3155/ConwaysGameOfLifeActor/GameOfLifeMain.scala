@@ -1,3 +1,7 @@
+/*
+    Author: Sriram Sankaranarayanan
+    srirams@<what is the centennial state?>.edu
+ */
 package edu.colorado.csci3155.ConwaysGameOfLifeActor
 
 import java.awt.{BasicStroke, Color, Graphics2D}
